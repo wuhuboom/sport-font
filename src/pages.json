@@ -1,0 +1,212 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "name": "home",
+      "aliasPath": "/"
+    },
+    {
+      "path": "pages/sports/index",
+      "name": "sports",
+      "aliasPath": "/sports"
+    },
+    {
+      "path": "pages/partners/index",
+      "name": "partners",
+      "aliasPath": "/partners"
+    },
+    {
+      "path": "pages/hall/index",
+      "name": "hall",
+      "aliasPath": "/hall"
+    },
+    {
+      "path": "pages/info/index",
+      "name": "info",
+      "aliasPath": "/info"
+    },
+    {
+      "path": "pages/cardManage/index",
+      "name": "cardManage",
+      "aliasPath": "/cardManage"
+    },
+    {
+      "path": "pages/rebate/index",
+      "name": "rebate",
+      "aliasPath": "/rebate"
+    },
+    {
+      "path": "pages/team/index",
+      "name": "team",
+      "aliasPath": "/team"
+    },
+    {
+      "path": "pages/commission/index",
+      "name": "commission",
+      "aliasPath": "/commission"
+    },
+    {
+      "path": "pages/games/index",
+      "name": "games",
+      "aliasPath": "/games"
+    },
+    {
+      "path": "pages/order/index",
+      "name": "order",
+      "aliasPath": "/order"
+    },
+    {
+      "path": "pages/login/index",
+      "name": "login",
+      "aliasPath": "/login/:langId(\\d+)?"
+    },
+    {
+      "path": "pages/register/index",
+      "name": "register",
+      "aliasPath": "/register"
+    },
+    {
+      "path": "pages/eventDetails/index",
+      "name": "eventDetails",
+      "aliasPath": "/eventDetails/:id"
+    },
+    {
+      "path": "pages/marketList/index",
+      "name": "marketList",
+      "aliasPath": "/marketList"
+    },
+    {
+      "path": "pages/aboutUniversal/index",
+      "name": "aboutUniversal",
+      "aliasPath": "/aboutUniversal"
+    },
+    {
+      "path": "pages/result/index",
+      "name": "result",
+      "aliasPath": "/result"
+    },
+    {
+      "path": "pages/history/index",
+      "name": "history",
+      "aliasPath": "/history"
+    },
+    {
+      "path": "pages/help/index",
+      "name": "help",
+      "aliasPath": "/help"
+    },
+    {
+      "path": "pages/invite/index",
+      "name": "invite",
+      "aliasPath": "/invite"
+    },
+    {
+      "path": "pages/deposit/index",
+      "name": "deposit",
+      "aliasPath": "/deposit"
+    },
+    {
+      "path": "pages/message/index",
+      "name": "message",
+      "aliasPath": "/message"
+    },
+    {
+      "path": "pages/messageDetails/index",
+      "name": "messageDetails",
+      "aliasPath": "/messageDetails"
+    },
+    {
+      "path": "pages/vip/index",
+      "name": "vip",
+      "aliasPath": "/vip"
+    },
+    {
+      "path": "pages/withdraw/index",
+      "name": "withdraw",
+      "aliasPath": "/withdraw"
+    },
+    {
+      "path": "pages/strongbox/index",
+      "name": "strongbox",
+      "aliasPath": "/strongbox"
+    },
+    {
+      "path": "pages/strongTransfer/index",
+      "name": "strongTransfer",
+      "aliasPath": "/strongTransfer"
+    },
+    {
+      "path": "pages/strongDetails/index",
+      "name": "strongDetails",
+      "aliasPath": "/strongDetails"
+    },
+    {
+      "path": "pages/strongReceipt/index",
+      "name": "strongReceipt",
+      "aliasPath": "/strongReceipt"
+    },
+    {
+      "path": "pages/strongRelocate/index",
+      "name": "strongRelocate",
+      "aliasPath": "/strongRelocate"
+    },
+    {
+      "path": "pages/payPwdSet/index",
+      "name": "payPwdSet",
+      "aliasPath": "/payPwdSet"
+    },
+    {
+      "path": "pages/safeBoxcz/index",
+      "name": "safeBoxcz",
+      "aliasPath": "/safeBoxcz"
+    },
+    {
+      "path": "pages/lottery/index",
+      "name": "lottery",
+      "aliasPath": "/lottery"
+    },
+    {
+      "path": "pages/ec/buy/index",
+      "name": "cebuy",
+      "aliasPath": "/cebuy"
+    },
+    {
+      "path": "pages/ec/order/index",
+      "name": "ceorder",
+      "aliasPath": "/ceorder"
+    },
+    {
+      "path": "pages/ec/my/index",
+      "name": "ecmy",
+      "aliasPath": "/ecmy"
+    },
+    {
+      "path": "pages/ec/buyDetail/index",
+      "name": "buyDetail",
+      "aliasPath": "/buyDetail"
+    },
+    {
+      "path": "pages/ec/createOrder/index",
+      "name": "createOrder",
+      "aliasPath": "/createOrder"
+    },
+    {
+      "path": "pages/ec/orderDetail/index",
+      "name": "orderDetail",
+      "aliasPath": "/orderDetail"
+    }
+  ],
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "CTER",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#1f1f1f"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  }
+}

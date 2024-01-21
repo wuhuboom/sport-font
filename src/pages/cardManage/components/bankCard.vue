@@ -1,0 +1,489 @@
+<template>
+  <view class="bankCard">
+    <uni-popup
+      ref="bindCard"
+      background-color="#fff"
+      type="bottom"
+      :is-mask-click="true"
+    >
+      <view class="title">
+        <text>{{ $t("cardManage.bankCard.title") }}</text>
+        <uni-icons
+          class="closeempty"
+          type="closeempty"
+          size="20"
+          @click="closeBind"
+        ></uni-icons>
+      </view>
+      <view class="set-amount">
+        <uni-forms
+          :modelValue="prarms"
+          label-position="top"
+          ref="form"
+          :rules="rules"
+        >
+          <view class="formView">
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.bankName')"
+              name="bankName"
+            >
+              <!-- <uni-data-select
+                v-model="prarms.bankId"
+                :localdata="range"
+                :clear="false"
+                @change="changeData"
+              ></uni-data-select> -->
+
+              <uni-combox
+                class="uni-combox"
+                :candidates="comboxData"
+                :placeholder="$t('cardManage.bankCard.comboxPlaceholder')"
+                :emptyTips="$t('cardManage.bankCard.comboxEmptyTips')"
+                @input="selectBankName"
+              ></uni-combox>
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.country')"
+              name="country"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.country"
+                :placeholder="$t('cardManage.bankCard.placeholderCountry')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.province')"
+              name="province"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.province"
+                :placeholder="$t('cardManage.bankCard.placeholderProvince')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item :label="$t('cardManage.bankCard.city')" name="city">
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.city"
+                :placeholder="$t('cardManage.bankCard.placeholderCity')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.subBranch')"
+              name="subBranch"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.subBranch"
+                :placeholder="$t('cardManage.bankCard.placeholderSubBranch')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.cardName')"
+              name="cardName"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.cardName"
+                :placeholder="$t('cardManage.bankCard.placeholderCardName')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.cardNumber')"
+              name="cardNumber"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.cardNumber"
+                :placeholder="$t('cardManage.bankCard.placeholderCardNumber')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.comfirmCardNum')"
+              name="cardNumberTwice"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.cardNumberTwice"
+                :placeholder="
+                  $t('cardManage.bankCard.placeholderComfirmCardNum')
+                "
+              />
+            </uni-forms-item>
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.backCode')"
+              name="backCode"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                v-model="prarms.backCode"
+                :placeholder="$t('cardManage.bankCard.placeholderBackCode')"
+              />
+            </uni-forms-item>
+
+            <uni-forms-item
+              :label="$t('cardManage.bankCard.payPwd')"
+              name="payPwd"
+            >
+              <uni-easyinput
+                class="easy-inp"
+                type="password"
+                v-model="prarms.payPwd"
+                :placeholder="$t('cardManage.bankCard.placeholderPayPwd')"
+              />
+            </uni-forms-item>
+            <uni-data-select
+              class=""
+              v-model="statuscode"
+              :localdata="codes"
+              @change="changeCode"
+              :clear="false"
+            ></uni-data-select>
+            <uni-forms-item name="code">
+              <view class="getCode">
+                <uni-easyinput
+                  class="code-inp"
+                  v-model="prarms.code"
+                  :placeholder="$t('cardManage.bankCard.placeholderPhoneCode')"
+                />
+                <button v-show="btnShow" class="code-btn" @click="getCode">
+                  {{ $t("cardManage.bankCard.getCodeBtn") }}
+                </button>
+                <button
+                  v-show="timeshow"
+                  class="code-btn-time"
+                  @click="getCode"
+                  disabled="true"
+                >
+                  {{ times }}
+                </button>
+              </view>
+            </uni-forms-item>
+            <view class="btn-class">
+              <button class="btn btn-right" type="default" @click="confirm">
+                {{ $t("cardManage.bankCard.addBtn") }}
+              </button>
+            </view>
+          </view>
+        </uni-forms>
+      </view>
+    </uni-popup>
+  </view>
+</template>
+
+<script>
+export default {
+  name: "bankCard",
+  data() {
+    return {
+      statuscode: 1,
+      codes: [
+        {
+          value: 0,
+          text: this.$t("info.login.code"),
+        },
+        {
+          value: 1,
+          text: this.$t("info.login.emailcode"),
+        },
+      ],
+      prarms: {
+        bankId: "",
+        country: "",
+        province: "",
+        city: "",
+        subBranch: "",
+        cardName: "",
+        cardNumber: "",
+        cardNumberTwice: "",
+        backCode: "",
+        payPwd: "",
+        code: "",
+      },
+      times: 60,
+      timeshow: false,
+      btnShow: true,
+      range: [],
+      comboxData: [],
+      rules: {
+        type: {
+          subBranch: [
+            {
+              required: true,
+              errorMessage: this.$t("cardManage.bankCard.placeholderSubBranch"),
+            },
+          ],
+        },
+        cardName: {
+          rules: [
+            {
+              required: true,
+              errorMessage: this.$t("cardManage.bankCard.placeholderCardName"),
+            },
+          ],
+        },
+        cardNumber: {
+          rules: [
+            {
+              required: true,
+              errorMessage: this.$t(
+                "cardManage.bankCard.placeholderCardNumber"
+              ),
+            },
+          ],
+        },
+        cardNumberTwice: {
+          rules: [
+            {
+              required: true,
+              errorMessage: this.$t(
+                "cardManage.bankCard.placeholderComfirmCardNum"
+              ),
+            },
+          ],
+        },
+        payPwd: {
+          rules: [
+            {
+              required: true,
+              errorMessage: this.$t("cardManage.bankCard.placeholderPayPwd"),
+            },
+          ],
+        },
+        code: {
+          rules: [
+            {
+              required: true,
+              errorMessage: this.$t("cardManage.bankCard.placeholderPhoneCode"),
+            },
+          ],
+        },
+      },
+    };
+  },
+  methods: {
+    changeCode(e) {
+      this.statuscode = e;
+    },
+    selectBankName(val) {
+      let bankId = "";
+      this.range.map(function (item) {
+        if (val === item.text) {
+          bankId = item.value;
+        }
+      });
+      if (bankId !== "") {
+        this.prarms.bankId = bankId;
+      } else {
+        this.prarms.bankId = "";
+      }
+    },
+    closeBind() {
+      this.$refs.bindCard.close();
+    },
+    openPopup() {
+      this.$refs.bindCard.open();
+    },
+    initBanks() {
+      this.$api
+        .getBank()
+        .then((res) => {
+          for (var i = 0; i < res.data.banks.length; i++) {
+            var data = new Object();
+            data.value = res.data.banks[i].id;
+            data.text = res.data.banks[i].bankCname;
+            this.comboxData.push(data.text);
+            this.range.push(data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    confirm() {
+      if (this.prarms.bankId === "") {
+        uni.showToast({
+          icon: "error",
+          title: this.$t("cardManage.bankCard.comboxPlaceholder"),
+        });
+        return;
+      }
+      this.$refs.form.validate().then((res) => {
+        this.$api
+          .bindCard(this.prarms)
+          .then((res) => {
+            let that = this;
+            uni.showToast({
+              title: this.$t("cardManage.bankCard.addSuccessMsg"),
+            });
+            setTimeout(function () {
+              that.$Router.push("/cardManage");
+            }, 2000);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+    },
+    getCode() {
+      var that = this;
+      that.timeshow = true;
+      that.btnShow = false;
+
+      if (this.statuscode === 0) {
+        // 请求code
+        that.$api.getCodeOnline({ type: "0" }).then((res) => {
+          uni.showToast({
+            title: this.$t("cardManage.bankCard.showToastMsg"),
+          });
+        });
+      } else {
+        this.$api.getmailCode().then((_) => {
+          uni.showToast({
+            title: this.$t("info.login.sendSuccess"),
+          });
+        });
+      }
+
+      if (that.times == 60) {
+        that.sid = setInterval(function () {
+          that.times--;
+          if (that.times == 0) {
+            clearInterval(that.sid);
+            that.timeshow = false;
+            that.btnShow = true;
+            that.times = 60;
+          }
+        }, 1000);
+      }
+    },
+    changeData(e) {
+      //console.log(this.prarms.bankId);
+    },
+  },
+  mounted() {
+    this.initBanks();
+  },
+};
+</script>
+<style scoped lang="scss">
+.title {
+  background-color: var(--body-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  z-index: 99999;
+  padding: 0 15px;
+  .closeempty {
+    color: var(--body-color) !important;
+  }
+}
+.set-amount {
+  background-color: var(--body-bg);
+  color: var(--body-color);
+  padding: 10px;
+  overflow: auto;
+  height: 70vh;
+  .font-class {
+    color: var(--body-color) !important;
+    font-size: 15px !important;
+  }
+  .getCode {
+    margin-top: -15px;
+    display: flex;
+    .code-inp {
+      width: 60%;
+    }
+    .code-btn {
+      line-height: 50px;
+      margin-left: 10px;
+      width: 30%;
+      border-radius: var(--card-radius) !important;
+      color: #fff !important;
+      background: var(--gradient-color) !important;
+      font-size: 17px;
+    }
+    .code-btn-time {
+      line-height: 50px;
+      margin-left: 10px;
+      width: 30%;
+      border-radius: var(--card-radius) !important;
+      font-size: 17px;
+      background: var(--btn-gray-color) !important;
+      color: #999 !important;
+    }
+  }
+  .btn {
+    border-radius: var(--card-radius);
+    margin: 15px 0;
+    color: #fff !important;
+    background: var(--gradient-color) !important;
+  }
+  .uni-combox {
+    height: 33px;
+    background-color: var(--form-main-uni-easyinput__content) !important;
+    border: var(--easyinput__border) !important;
+    color: var(--easyinput__color);
+  }
+
+  &::v-deep .uni-combox__selector {
+    background-color: var(--uni-select__selector-bg) !important;
+    border: var(--uni-select__solid) !important;
+  }
+
+  &::v-deep .uni-forms-item__label {
+    width: auto !important;
+    color: var(--easyinput__color);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  &::v-deep .uni-easyinput__content {
+    background-color: var(--form-main-uni-easyinput__content) !important;
+    border: var(--easyinput__border) !important;
+    box-shadow: var(--shadow-bg);
+    border-radius: var(--card-radius) !important;
+    height: 50px;
+    padding: 0 15px 0 10px;
+    color: var(--easyinput__color);
+  }
+  &::v-deep .uni-select {
+    font-size: 16px;
+    background-color: var(--form-main-uni-easyinput__content);
+    color: var(--easyinput__color);
+    border: var(--easyinput__border) !important;
+    box-shadow: var(--shadow-bg);
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 0 5px;
+    position: relative;
+    user-select: none;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+  }
+  &::v-deep .uni-select__selector-item {
+    font-size: 15px !important;
+  }
+  &::v-deep .uni-select__input-text {
+    font-size: 15px !important;
+    color: var(--navbar-color);
+  }
+  &::v-deep .uni-select__selector {
+    background-color: var(--uni-select__selector-bg) !important;
+    border: var(--uni-select__solid) !important;
+    border-radius: var(--card-radius) !important;
+  }
+}
+</style>

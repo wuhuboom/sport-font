@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "types": [
+      "@dcloudio/types",
+      "miniprogram-api-typings",
+      "mini-types",
+      "@uni-helper/uni-app-types",
+      "@uni-helper/uni-ui-types",
+      "uni-ui-components-types"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "vueCompilerOptions": {
+    "experimentalRuntimeMode": "runtime-uni-app",
+    "nativeTags": ["block", "component", "template", "slot"]
+  },
+  "include": ["src/**/*.vue"]
+}
